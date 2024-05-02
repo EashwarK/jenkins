@@ -10,18 +10,27 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Building.."
+                echo "Building Folder.."
+                sh '''
+                echo "Starting the Build and jenkins..."
+                '''
+            }
+        }
+        stage('Install') {
+            steps {
+                echo "Installing requirements.."
                 sh '''
                 cd myapp
                 pip install -r requirements.txt
                 '''
             }
         }
-        stage('Test') {
+        stage('Run') {
             steps {
-                echo "Testing.."
+                echo "Running.."
                 sh '''
                 cd myapp
+                pip install fire
                 python3 hello.py
                 python3 hello.py --name=Eash
                 '''
