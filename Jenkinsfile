@@ -25,12 +25,20 @@ pipeline {
                 '''
             }
         }
+        stage('Check Installation') {
+            steps {
+                echo "Checking Installation.."
+                sh '''
+                cd myapp
+                pip show fire || pip install fire
+                '''
+            }
+        }
         stage('Run') {
             steps {
                 echo "Running.."
                 sh '''
                 cd myapp
-                pip install fire
                 python3 hello.py
                 python3 hello.py --name=Eash
                 '''
