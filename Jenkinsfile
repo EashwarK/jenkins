@@ -2,8 +2,8 @@ pipeline {
     agent { 
         node {
             label 'docker-agent-python'
-            }
-      }
+        }
+    }
     triggers {
         pollSCM '* * * * *'
     }
@@ -23,7 +23,7 @@ pipeline {
                 sh '''
                 cd myapp
                 python3 hello.py
-                python3 hello.py --name=Brad
+                python3 hello.py --name=Eash
                 '''
             }
         }
@@ -34,6 +34,32 @@ pipeline {
                 echo "doing delivery stuff.."
                 '''
             }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+                sh '''
+                echo "doing deployment stuff.."
+                '''
+            }
+        }
+        stage('Notify') {
+            steps {
+                echo 'Notifying....'
+                sh '''
+                echo "sending notifications..It is Done"
+                '''
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+            echo 'Sending success notification...'
+        }
+        failure {
+            echo 'Pipeline failed!'
+            echo 'Sending failure notification...'
         }
     }
 }
